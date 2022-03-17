@@ -1,7 +1,7 @@
 let lignes = 10;   // Variable globale
 let colonnes = 10; // Variable globale
-let case_ligne = lignes;  // Variable globale
-let case_colonne = 1;     // Variable globale
+let pourfendeur_ligne = lignes;  // Variable globale
+let pourfendeur_colonne = 1;     // Variable globale
 
 let affichage_actif = false; // Variable globale
 let fantome_1_ligne = null; // Variable globale
@@ -22,8 +22,8 @@ function creationTable() {
     if (colonnes== "" || colonnes == null)
 	colonnes = 10;
 
-    case_ligne = lignes;
-    case_colonne = 1;
+    pourfendeur_ligne = lignes;
+    pourfendeur_colonne = 1;
     affichage_actif = true;
     initialisation_fantomes();
     affichageTable();
@@ -37,7 +37,7 @@ function affichageTable() {
     for (i=1;i<=lignes;i++) {
 	output = output + "<tr>";  // début de la création d'une nouvelle ligne
 	while (j<=colonnes) {
-	    if ((i == case_ligne) && (j == case_colonne)) {
+	    if ((i == pourfendeur_ligne) && (j == pourfendeur_colonne)) {
 		output = output + "<td bgcolor='orange'>" + "" + "</td>";
 	    } else if ((i == fantome_1_ligne) && (j == fantome_1_colonne)) {
 		output = output + "<td bgcolor='cyan'>" + "" + "</td>";
@@ -74,37 +74,37 @@ document.addEventListener('keydown', (e) => {
 })
 
 function versLeHaut() {
-    if (case_ligne > 1) {
-	if ((case_ligne - 1 == case_bloquee_1_ligne) && (case_colonne == case_bloquee_1_colonne))
+    if (pourfendeur_ligne > 1) {
+	if ((pourfendeur_ligne - 1 == case_bloquee_1_ligne) && (pourfendeur_colonne == case_bloquee_1_colonne))
 	    return;
-	case_ligne = case_ligne - 1;
+	pourfendeur_ligne = pourfendeur_ligne - 1;
 	affichageTable()
     }
 }
 
 function versLeBas() {
-    if (case_ligne < lignes) {
-	if ((case_ligne + 1 == case_bloquee_1_ligne) && (case_colonne == case_bloquee_1_colonne))
+    if (pourfendeur_ligne < lignes) {
+	if ((pourfendeur_ligne + 1 == case_bloquee_1_ligne) && (pourfendeur_colonne == case_bloquee_1_colonne))
 	    return;
-	case_ligne = case_ligne + 1;
+	pourfendeur_ligne = pourfendeur_ligne + 1;
 	affichageTable()
     }
 }
 
 function versLaGauche() {
-    if (case_colonne > 1) {
-	if ((case_ligne == case_bloquee_1_ligne) && (case_colonne - 1 == case_bloquee_1_colonne))
+    if (pourfendeur_colonne > 1) {
+	if ((pourfendeur_ligne == case_bloquee_1_ligne) && (pourfendeur_colonne - 1 == case_bloquee_1_colonne))
 	    return;
-	case_colonne = case_colonne - 1;
+	pourfendeur_colonne = pourfendeur_colonne - 1;
 	affichageTable()
     }
 }
 
 function versLaDroite() {
-    if (case_colonne < colonnes) {
-	if ((case_ligne == case_bloquee_1_ligne) && (case_colonne + 1 == case_bloquee_1_colonne))
+    if (pourfendeur_colonne < colonnes) {
+	if ((pourfendeur_ligne == case_bloquee_1_ligne) && (pourfendeur_colonne + 1 == case_bloquee_1_colonne))
 	    return;
-	case_colonne = case_colonne + 1;
+	pourfendeur_colonne = pourfendeur_colonne + 1;
 	affichageTable()
     }
 }
