@@ -1,10 +1,14 @@
 let lignes = 10;   // Variable globale
 let colonnes = 10; // Variable globale
-
 let case_ligne = lignes;  // Variable globale
 let case_colonne = 1;     // Variable globale
 
 let affichage_actif = false; // Variable globale
+let fantome_1_ligne = null; // Variable globale
+let fantome_1_colonne = null; // Variable globale
+let fantome_2_ligne = null; // Variable globale
+let fantome_2_colonne = null; // Variable globale
+let VarControleTimer = null; // Variable globale
 
 function creationTable() {
     lignes = document.getElementById("lignes").value;
@@ -17,7 +21,10 @@ function creationTable() {
 
     case_ligne = lignes;
     case_colonne = 1;
+    affichage_actif = true;
+    initialisation_fantomes();
     affichageTable();
+    VarControleTimer = setInterval(deplacement_fantomes, 200);
 }
 
 function affichageTable() {
@@ -29,6 +36,10 @@ function affichageTable() {
 	while (j<=colonnes) {
 	    if ((i == case_ligne) && (j == case_colonne)) {
 		output = output + "<td bgcolor='orange'>" + "" + "</td>";
+	    } else if ((i == fantome_1_ligne) && (j == fantome_1_colonne)) {
+		output = output + "<td bgcolor='cyan'>" + "" + "</td>";
+	    } else if ((i == fantome_2_ligne) && (j == fantome_2_colonne)) {
+		output = output + "<td bgcolor='pink'>" + "" + "</td>";
 	    } else {
 		output = output + "<td>" + "" + "</td>";
 	    }
@@ -39,7 +50,6 @@ function affichageTable() {
     }
     output = output + "</table>";
     document.getElementById("resultat").innerHTML = output;
-    affichage_actif = true;
 }
 
 document.addEventListener('keydown', (e) => {
@@ -84,4 +94,37 @@ function versLaDroite() {
 	case_colonne = case_colonne + 1;
 	affichageTable()
     }
+}
+
+function initialisation_fantomes() {
+    fantome_1_ligne = Math.floor(Math.random() * lignes + 1);
+    fantome_1_colonne = Math.floor(Math.random() * colonnes + 1);
+    fantome_2_ligne = Math.floor(Math.random() * lignes + 1);
+    fantome_2_colonne = Math.floor(Math.random() * colonnes + 1);
+}
+
+function deplacement_fantomes() {
+    let direction_pour_fantome_1 = Math.floor(Math.random() * 4 + 1);
+    // 1 vers le haut, 2 vers le bas, 3 vers la gauche, 4 vers la droite
+    if ((direction_pour_fantome_1 == 1) && (fantome_1_ligne > 1)) {
+	fantome_1_ligne = fantome_1_ligne - 1;
+    } else if ((direction_pour_fantome_1 == 2) && (fantome_1_ligne < lignes)) {
+	fantome_1_ligne = fantome_1_ligne + 1;
+    } else if ((direction_pour_fantome_1 == 3) && (fantome_1_colonne > 1)) {
+	fantome_1_colonne = fantome_1_colonne - 1;
+    } else if ((direction_pour_fantome_1 == 4) && (fantome_1_colonne < colonnes)) {
+	fantome_1_colonne = fantome_1_colonne + 1;
+    }
+    let direction_pour_fantome_2 = Math.floor(Math.random() * 4 + 1);
+    // 1 vers le haut, 2 vers le bas, 3 vers la gauche, 4 vers la droite
+    if ((direction_pour_fantome_2 == 1) && (fantome_2_ligne > 1)) {
+	fantome_2_ligne = fantome_2_ligne - 1;
+    } else if ((direction_pour_fantome_2 == 2) && (fantome_2_ligne < lignes)) {
+	fantome_2_ligne = fantome_2_ligne + 1;
+    } else if ((direction_pour_fantome_2 == 3) && (fantome_2_colonne > 1)) {
+	fantome_2_colonne = fantome_2_colonne - 1;
+    } else if ((direction_pour_fantome_2 == 4) && (fantome_2_colonne < colonnes)) {
+	fantome_2_colonne = fantome_2_colonne + 1;
+    }
+    affichageTable();
 }
