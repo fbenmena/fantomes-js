@@ -10,6 +10,9 @@ let fantome_2_ligne = null; // Variable globale
 let fantome_2_colonne = null; // Variable globale
 let VarControleTimer = null; // Variable globale
 
+let case_bloquee_1_ligne = 5;
+let case_bloquee_1_colonne = 5;
+
 function creationTable() {
     lignes = document.getElementById("lignes").value;
     colonnes = document.getElementById("colonnes").value;
@@ -40,6 +43,8 @@ function affichageTable() {
 		output = output + "<td bgcolor='cyan'>" + "" + "</td>";
 	    } else if ((i == fantome_2_ligne) && (j == fantome_2_colonne)) {
 		output = output + "<td bgcolor='pink'>" + "" + "</td>";
+	    } else if ((i == case_bloquee_1_ligne) && (j == case_bloquee_1_colonne)) {
+		output = output + "<td bgcolor='black'>" + "" + "</td>";
 	    } else {
 		output = output + "<td>" + "" + "</td>";
 	    }
@@ -70,6 +75,8 @@ document.addEventListener('keydown', (e) => {
 
 function versLeHaut() {
     if (case_ligne > 1) {
+	if ((case_ligne - 1 == case_bloquee_1_ligne) && (case_colonne == case_bloquee_1_colonne))
+	    return;
 	case_ligne = case_ligne - 1;
 	affichageTable()
     }
@@ -77,6 +84,8 @@ function versLeHaut() {
 
 function versLeBas() {
     if (case_ligne < lignes) {
+	if ((case_ligne + 1 == case_bloquee_1_ligne) && (case_colonne == case_bloquee_1_colonne))
+	    return;
 	case_ligne = case_ligne + 1;
 	affichageTable()
     }
@@ -84,6 +93,8 @@ function versLeBas() {
 
 function versLaGauche() {
     if (case_colonne > 1) {
+	if ((case_ligne == case_bloquee_1_ligne) && (case_colonne - 1 == case_bloquee_1_colonne))
+	    return;
 	case_colonne = case_colonne - 1;
 	affichageTable()
     }
@@ -91,6 +102,8 @@ function versLaGauche() {
 
 function versLaDroite() {
     if (case_colonne < colonnes) {
+	if ((case_ligne == case_bloquee_1_ligne) && (case_colonne + 1 == case_bloquee_1_colonne))
+	    return;
 	case_colonne = case_colonne + 1;
 	affichageTable()
     }
