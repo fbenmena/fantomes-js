@@ -1,17 +1,18 @@
 let lignes = 10;   // Variable globale
 let colonnes = 10; // Variable globale
+
 let pourfendeur_ligne = lignes;  // Variable globale
 let pourfendeur_colonne = 1;     // Variable globale
 
-let affichage_actif = false; // Variable globale
-let fantome_1_ligne = null; // Variable globale
-let fantome_1_colonne = null; // Variable globale
-let fantome_2_ligne = null; // Variable globale
-let fantome_2_colonne = null; // Variable globale
-let VarControleTimer = null; // Variable globale
+let affichage_actif = false;     // Variable globale
+let fantome_1_ligne = null;      // Variable globale
+let fantome_1_colonne = null;    // Variable globale
+let fantome_2_ligne = null;      // Variable globale
+let fantome_2_colonne = null;    // Variable globale
+let VarControleTimer = null;     // Variable globale
 
-let case_bloquee_1_ligne = 5;
-let case_bloquee_1_colonne = 5;
+let cases_bloquees = null; // Variable globale
+
 
 function creationTable() {
     lignes = document.getElementById("lignes").value;
@@ -22,12 +23,28 @@ function creationTable() {
     if (colonnes== "" || colonnes == null)
 	colonnes = 10;
 
+    cases_bloquees = [[3, 3], [4, 4], [5, 5],
+		      [lignes - 3, colonnes - 3],
+		      [lignes - 4, colonnes - 4],
+		      [lignes - 5, colonnes - 5],
+		      [3, colonnes - 3],
+		      [4, colonnes - 4],
+		      [5, colonnes - 5],
+		      [lignes - 3, 3],
+		      [lignes - 4, 4],
+		      [lignes - 5, 5],
+		     ];
+
     pourfendeur_ligne = lignes;
     pourfendeur_colonne = 1;
     affichage_actif = true;
     initialisation_fantomes();
     affichageTable();
     VarControleTimer = setInterval(deplacement_fantomes, 200);
+}
+
+function estUneCaseBloquee(pos_ligne, pos_colonne) {
+    return cases_bloquees.some((couple) => (couple[0] == pos_ligne) && (couple[1] == pos_colonne))
 }
 
 function affichageTable() {
@@ -43,7 +60,7 @@ function affichageTable() {
 		output = output + "<td bgcolor='cyan'>" + "" + "</td>";
 	    } else if ((i == fantome_2_ligne) && (j == fantome_2_colonne)) {
 		output = output + "<td bgcolor='pink'>" + "" + "</td>";
-	    } else if ((i == case_bloquee_1_ligne) && (j == case_bloquee_1_colonne)) {
+	    } else if (estUneCaseBloquee(i, j)) {
 		output = output + "<td bgcolor='black'>" + "" + "</td>";
 	    } else {
 		output = output + "<td>" + "" + "</td>";
@@ -68,15 +85,15 @@ document.addEventListener('keydown', (e) => {
 	} else if (e.key == "ArrowRight") {
 	    versLaDroite();
 	} else {
-	    console.log(`property value is "${e.key}"`);
+	    console.log(`Touche actionnée "${e.key}"`);
 	}
     }
 })
 
 function versLeHaut() {
     if (pourfendeur_ligne > 1) {
-	if ((pourfendeur_ligne - 1 == case_bloquee_1_ligne) && (pourfendeur_colonne == case_bloquee_1_colonne))
-	    return;
+	if (estUneCaseBloquee(pourfendeur_ligne - 1, pourfendeur_colonne))
+	    return
 	pourfendeur_ligne = pourfendeur_ligne - 1;
 	affichageTable()
     }
@@ -84,8 +101,8 @@ function versLeHaut() {
 
 function versLeBas() {
     if (pourfendeur_ligne < lignes) {
-	if ((pourfendeur_ligne + 1 == case_bloquee_1_ligne) && (pourfendeur_colonne == case_bloquee_1_colonne))
-	    return;
+	if (estUneCaseBloquee(pourfendeur_ligne + 1, pourfendeur_colonne))
+	    return
 	pourfendeur_ligne = pourfendeur_ligne + 1;
 	affichageTable()
     }
@@ -93,8 +110,8 @@ function versLeBas() {
 
 function versLaGauche() {
     if (pourfendeur_colonne > 1) {
-	if ((pourfendeur_ligne == case_bloquee_1_ligne) && (pourfendeur_colonne - 1 == case_bloquee_1_colonne))
-	    return;
+	if (estUneCaseBloquee(pourfendeur_ligne, pourfendeur_colonne - 1))
+	    return
 	pourfendeur_colonne = pourfendeur_colonne - 1;
 	affichageTable()
     }
@@ -102,8 +119,8 @@ function versLaGauche() {
 
 function versLaDroite() {
     if (pourfendeur_colonne < colonnes) {
-	if ((pourfendeur_ligne == case_bloquee_1_ligne) && (pourfendeur_colonne + 1 == case_bloquee_1_colonne))
-	    return;
+	if (estUneCaseBloquee(pourfendeur_ligne, pourfendeur_colonne + 1))
+	    return
 	pourfendeur_colonne = pourfendeur_colonne + 1;
 	affichageTable()
     }
