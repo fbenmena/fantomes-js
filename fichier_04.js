@@ -19,21 +19,21 @@ function creationTable() {
     colonnes = document.getElementById("colonnes").value;
 
     if (lignes == "" || lignes == null)
-	lignes = 10;
+        lignes = 10;
     if (colonnes== "" || colonnes == null)
-	colonnes = 10;
+        colonnes = 10;
 
     cases_bloquees = [[3, 3], [4, 4], [5, 5],
-		      [lignes - 3, colonnes - 3],
-		      [lignes - 4, colonnes - 4],
-		      [lignes - 5, colonnes - 5],
-		      [3, colonnes - 3],
-		      [4, colonnes - 4],
-		      [5, colonnes - 5],
-		      [lignes - 3, 3],
-		      [lignes - 4, 4],
-		      [lignes - 5, 5],
-		     ];
+                      [lignes - 3, colonnes - 3],
+                      [lignes - 4, colonnes - 4],
+                      [lignes - 5, colonnes - 5],
+                      [3, colonnes - 3],
+                      [4, colonnes - 4],
+                      [5, colonnes - 5],
+                      [lignes - 3, 3],
+                      [lignes - 4, 4],
+                      [lignes - 5, 5],
+                     ];
 
     pourfendeur_ligne = lignes;
     pourfendeur_colonne = 1;
@@ -52,23 +52,23 @@ function affichageTable() {
     let output = "<table border='1' cellspacing='0' cellpadding='10'>";
 
     for (i=1;i<=lignes;i++) {
-	output = output + "<tr>";  // début de la création d'une nouvelle ligne
-	while (j<=colonnes) {
-	    if ((i == pourfendeur_ligne) && (j == pourfendeur_colonne)) {
-		output = output + "<td bgcolor='orange'>" + "" + "</td>";
-	    } else if ((i == fantome_1_ligne) && (j == fantome_1_colonne)) {
-		output = output + "<td bgcolor='cyan'>" + "" + "</td>";
-	    } else if ((i == fantome_2_ligne) && (j == fantome_2_colonne)) {
-		output = output + "<td bgcolor='pink'>" + "" + "</td>";
-	    } else if (estUneCaseBloquee(i, j)) {
-		output = output + "<td bgcolor='black'>" + "" + "</td>";
-	    } else {
-		output = output + "<td>" + "" + "</td>";
-	    }
-	    j = j+1;
-	}
-	output = output + "</tr>"; // fin de la création de la nouvelle ligne
-	j = 1;
+        output = output + "<tr>";  // début de la création d'une nouvelle ligne
+        while (j<=colonnes) {
+            if ((i == pourfendeur_ligne) && (j == pourfendeur_colonne)) {
+                output = output + "<td bgcolor='orange'>" + "" + "</td>";
+            } else if ((i == fantome_1_ligne) && (j == fantome_1_colonne)) {
+                output = output + "<td bgcolor='cyan'>" + "" + "</td>";
+            } else if ((i == fantome_2_ligne) && (j == fantome_2_colonne)) {
+                output = output + "<td bgcolor='pink'>" + "" + "</td>";
+            } else if (estUneCaseBloquee(i, j)) {
+                output = output + "<td bgcolor='black'>" + "" + "</td>";
+            } else {
+                output = output + "<td>" + "" + "</td>";
+            }
+            j = j+1;
+        }
+        output = output + "</tr>"; // fin de la création de la nouvelle ligne
+        j = 1;
     }
     output = output + "</table>";
     document.getElementById("resultat").innerHTML = output;
@@ -76,53 +76,53 @@ function affichageTable() {
 
 document.addEventListener('keydown', (e) => {
     if (affichage_actif == true) {
-	if (e.key == "ArrowUp") {
-	    versLeHaut();
-	} else if (e.key == "ArrowDown") {
-	    versLeBas();
-	} else if (e.key == "ArrowLeft") {
-	    versLaGauche();
-	} else if (e.key == "ArrowRight") {
-	    versLaDroite();
-	} else {
-	    console.log(`Touche actionnée "${e.key}"`);
-	}
+        if (e.key == "ArrowUp") {
+            versLeHaut();
+        } else if (e.key == "ArrowDown") {
+            versLeBas();
+        } else if (e.key == "ArrowLeft") {
+            versLaGauche();
+        } else if (e.key == "ArrowRight") {
+            versLaDroite();
+        } else {
+            console.log(`Touche actionnée "${e.key}"`);
+        }
     }
 })
 
 function versLeHaut() {
     if (pourfendeur_ligne > 1) {
-	if (estUneCaseBloquee(pourfendeur_ligne - 1, pourfendeur_colonne))
-	    return
-	pourfendeur_ligne = pourfendeur_ligne - 1;
-	affichageTable()
+        if (estUneCaseBloquee(pourfendeur_ligne - 1, pourfendeur_colonne))
+            return
+        pourfendeur_ligne = pourfendeur_ligne - 1;
+        affichageTable()
     }
 }
 
 function versLeBas() {
     if (pourfendeur_ligne < lignes) {
-	if (estUneCaseBloquee(pourfendeur_ligne + 1, pourfendeur_colonne))
-	    return
-	pourfendeur_ligne = pourfendeur_ligne + 1;
-	affichageTable()
+        if (estUneCaseBloquee(pourfendeur_ligne + 1, pourfendeur_colonne))
+            return
+        pourfendeur_ligne = pourfendeur_ligne + 1;
+        affichageTable()
     }
 }
 
 function versLaGauche() {
     if (pourfendeur_colonne > 1) {
-	if (estUneCaseBloquee(pourfendeur_ligne, pourfendeur_colonne - 1))
-	    return
-	pourfendeur_colonne = pourfendeur_colonne - 1;
-	affichageTable()
+        if (estUneCaseBloquee(pourfendeur_ligne, pourfendeur_colonne - 1))
+            return
+        pourfendeur_colonne = pourfendeur_colonne - 1;
+        affichageTable()
     }
 }
 
 function versLaDroite() {
     if (pourfendeur_colonne < colonnes) {
-	if (estUneCaseBloquee(pourfendeur_ligne, pourfendeur_colonne + 1))
-	    return
-	pourfendeur_colonne = pourfendeur_colonne + 1;
-	affichageTable()
+        if (estUneCaseBloquee(pourfendeur_ligne, pourfendeur_colonne + 1))
+            return
+        pourfendeur_colonne = pourfendeur_colonne + 1;
+        affichageTable()
     }
 }
 
@@ -137,24 +137,24 @@ function deplacement_fantomes() {
     let direction_pour_fantome_1 = Math.floor(Math.random() * 4 + 1);
     // 1 vers le haut, 2 vers le bas, 3 vers la gauche, 4 vers la droite
     if ((direction_pour_fantome_1 == 1) && (fantome_1_ligne > 1)) {
-	fantome_1_ligne = fantome_1_ligne - 1;
+        fantome_1_ligne = fantome_1_ligne - 1;
     } else if ((direction_pour_fantome_1 == 2) && (fantome_1_ligne < lignes)) {
-	fantome_1_ligne = fantome_1_ligne + 1;
+        fantome_1_ligne = fantome_1_ligne + 1;
     } else if ((direction_pour_fantome_1 == 3) && (fantome_1_colonne > 1)) {
-	fantome_1_colonne = fantome_1_colonne - 1;
+        fantome_1_colonne = fantome_1_colonne - 1;
     } else if ((direction_pour_fantome_1 == 4) && (fantome_1_colonne < colonnes)) {
-	fantome_1_colonne = fantome_1_colonne + 1;
+        fantome_1_colonne = fantome_1_colonne + 1;
     }
     let direction_pour_fantome_2 = Math.floor(Math.random() * 4 + 1);
     // 1 vers le haut, 2 vers le bas, 3 vers la gauche, 4 vers la droite
     if ((direction_pour_fantome_2 == 1) && (fantome_2_ligne > 1)) {
-	fantome_2_ligne = fantome_2_ligne - 1;
+        fantome_2_ligne = fantome_2_ligne - 1;
     } else if ((direction_pour_fantome_2 == 2) && (fantome_2_ligne < lignes)) {
-	fantome_2_ligne = fantome_2_ligne + 1;
+        fantome_2_ligne = fantome_2_ligne + 1;
     } else if ((direction_pour_fantome_2 == 3) && (fantome_2_colonne > 1)) {
-	fantome_2_colonne = fantome_2_colonne - 1;
+        fantome_2_colonne = fantome_2_colonne - 1;
     } else if ((direction_pour_fantome_2 == 4) && (fantome_2_colonne < colonnes)) {
-	fantome_2_colonne = fantome_2_colonne + 1;
+        fantome_2_colonne = fantome_2_colonne + 1;
     }
     affichageTable();
 }
